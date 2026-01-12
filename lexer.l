@@ -34,7 +34,8 @@
 "MULTIPLICA" { return MULTIPLICA; }
 "DIVIDE"     { return DIVIDE; }
 "FIN-CALCULA"{ return FIN_CALCULA; }
-\n            { /* Ignorar saltos de línea */ }
+.|
 [ \t]+        { /* Ignorar espacios y tabulaciones */ }
+[\n]+         { /* Ignorar saltos de línea */ }
 .             { /* Ignorar cualquier carácter por ahora */ }
 %%
