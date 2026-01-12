@@ -7,8 +7,6 @@
 %}
 %option noyywrap
 %%
-// ...aquí irán las reglas léxicas...
-
-.   { /* Ignorar cualquier carácter por ahora */ }
+   .   { /* Ignorar cualquier carácter por ahora */ }
 %%
 int yywrap() { return 1; }
