@@ -8,7 +8,6 @@
 %option noyywrap
 %%
 "PROGRAMA"   { return PROGRAMA; }
-.             { /* Ignorar cualquier carácter por ahora */ }
 "INICIO"     { return INICIO; }
 "FIN"        { return FIN; }
 "LEE"        { return LEE; }
