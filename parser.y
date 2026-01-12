@@ -10,9 +10,11 @@ int yylex(void);
 %start programa
 
 %%
-// Reglas de gramática mínimas
+// Declaración mínima de token
+%token PROGRAMA
+
 programa:
-    /* vacío, por completar */
+    PROGRAMA
     ;
 %%
 int main() {
