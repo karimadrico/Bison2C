@@ -9,4 +9,33 @@
 %%
 "PROGRAMA"   { return PROGRAMA; }
 .             { /* Ignorar cualquier carácter por ahora */ }
+"INICIO"     { return INICIO; }
+"FIN"        { return FIN; }
+"LEE"        { return LEE; }
+"MUESTRA"    { return MUESTRA; }
+"EJECUTA"    { return EJECUTA; }
+"FIN-EJECUTA"{ return FIN_EJECUTA; }
+"VECES"      { return VECES; }
+"USANDO"     { return USANDO; }
+"HASTA-QUE"  { return HASTA_QUE; }
+"ENTONCES"   { return ENTONCES; }
+"MUEVE"      { return MUEVE; }
+"A"          { return A; }
+"MAYOR"      { return MAYOR; }
+"MENOR"      { return MENOR; }
+"ENTRE"      { return ENTRE; }
+"SINO"       { return SINO; }
+"SI"         { return SI; }
+"FIN-SI"     { return FIN_SI; }
+"NO"         { return NO; }
+"DANDO"      { return DANDO; }
+"CALCULA"    { return CALCULA; }
+"SUMA"       { return SUMA; }
+"RESTA"      { return RESTA; }
+"MULTIPLICA" { return MULTIPLICA; }
+"DIVIDE"     { return DIVIDE; }
+"FIN-CALCULA"{ return FIN_CALCULA; }
+\n            { /* Ignorar saltos de línea */ }
+[ \t]+        { /* Ignorar espacios y tabulaciones */ }
+.             { /* Ignorar cualquier carácter por ahora */ }
 %%
