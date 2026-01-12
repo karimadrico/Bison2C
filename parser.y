@@ -9,10 +9,8 @@ int yylex(void);
 
 %start programa
 
-%%
-// Declaración mínima de token
 %token PROGRAMA
-
+%%
 programa:
     PROGRAMA
     ;

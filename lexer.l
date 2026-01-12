@@ -7,6 +7,7 @@
 %}
 %option noyywrap
 %%
-   .   { /* Ignorar cualquier carácter por ahora */ }
+"PROGRAMA"   { return PROGRAMA; }
+.             { /* Ignorar cualquier carácter por ahora */ }
 %%
 int yywrap() { return 1; }
