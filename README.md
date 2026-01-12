@@ -16,3 +16,8 @@ NOTA5: No podrá aprobarse la práctica con un parser en el que haya conflictos 
 NOTA6: No se permite utilizar C para resolver cosas que se pueden hacer en directamente en Flex y Bison. El uso de C debe restringirse al mínimo necesario, aunque se permitirá usar funciones como strdup, asprintf, free, fprintf, fopen, perror, u otras, siempre que esté justificada la imposibilidad de hacerlo con Flex y Bison.
 
 NOTA7: Se valorará positivamente que el código sea ordenado y claro, esté convenientemente comentado y que en los comentarios no haya faltas de ortografía.
+
+# Ejecutar
+flex lexer.l
+bison -d parser.y
+gcc lex.yy.c y.tab.c -o compilador

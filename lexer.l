@@ -1,4 +1,4 @@
-/* Práctica de Bison de 2ª convocatoria
+/* lexer.l - Analizador léxico - Práctica de Bison de 2ª convocatoria
    Karima Drafli Rico */
 %{
 #include "y.tab.h"
