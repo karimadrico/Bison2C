@@ -1,7 +1,7 @@
 /* lexer.l - Analizador léxico - Práctica de Bison de 2ª convocatoria
    Karima Drafli Rico */
 %{
-#include "y.tab.h"
+#include "parser.tab.h"
 #include <stdio.h>
 #include <stdlib.h>
 %}

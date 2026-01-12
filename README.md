@@ -18,6 +18,14 @@ NOTA6: No se permite utilizar C para resolver cosas que se pueden hacer en direc
 NOTA7: Se valorará positivamente que el código sea ordenado y claro, esté convenientemente comentado y que en los comentarios no haya faltas de ortografía.
 
 # Ejecutar
+Esto genera los archivos necesarios con Bison y Flex: 
+bison -v -d parser.y 
 flex lexer.l
-bison -d parser.y
-gcc lex.yy.c y.tab.c -o compilador
+
+Compilar: 
+gcc -o compilador parser.tab.c lex.yy.c -lfl
+
+Ejecutar el compilador con un archivo de ejemplo: 
+./compilador ejemplo1.txt 
+./compilador ejemplo2.txt 
+./compilador ejemplo3.txt
