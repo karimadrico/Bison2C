@@ -10,4 +10,3 @@
 "PROGRAMA"   { return PROGRAMA; }
 .             { /* Ignorar cualquier carácter por ahora */ }
 %%
-int yywrap() { return 1; }
