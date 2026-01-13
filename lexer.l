@@ -34,23 +34,12 @@
 "MULTIPLICA" { return MULTIPLICA; }
 "DIVIDE"     { return DIVIDE; }
 "FIN-CALCULA"{ return FIN_CALCULA; }
-.             { /* Ignorar cualquier carácter por ahora */ }
-[ \t]+        { /* Ignorar espacios y tabulaciones */ }
 
-// Comentarios COBOL y alternativos
-^[ \t]*\*.*         { /* Comentario COBOL tolerante */ }
-"*>".*              { /* Comentario en línea COBOL */ }
-"*|".*              { /* Comentario en línea alternativa */ }
-
-// Cadenas
-"\""[^"]*"\""      { /* Cadena entre comillas dobles */ }
-'[^']*'              { /* Cadena entre comillas simples */ }
-
-// Identificadores y números
-[A-Z]([A-Z0-9\-]*[A-Z0-9])? { /* Identificador */ }
-[0-9]+                { /* Número */ }
-
-[ \t]+                { /* Ignorar espacios y tabulaciones */ }
-[\r\n]+               { /* Ignorar saltos de línea */ }
-.                     { /* Ignorar cualquier carácter por ahora */ }
+"[^"]*"      { /* Cadena entre comillas dobles */ }
+'[^']*'      { /* Cadena entre comillas simples */ }
+[A-Z][A-Z0-9\-]* { /* Identificador */ }
+[0-9]+       { /* Número */ }
+[ \t]+       { /* Ignorar espacios y tabulaciones */ }
+\n           { /* Ignorar saltos de línea */ }
+.            { /* Ignorar cualquier carácter por ahora */ }
 %%
