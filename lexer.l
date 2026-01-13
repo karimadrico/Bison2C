@@ -13,7 +13,7 @@
 "LEE"        { return LEE; }
 "MUESTRA"    { return MUESTRA; }
 "EJECUTA"    { return EJECUTA; }
-"FIN-EJECUTA"{ return FIN_EJECUTA; }
+"FIN-EJECUTA" { return FIN_EJECUTA; }
 "VECES"      { return VECES; }
 "USANDO"     { return USANDO; }
 "HASTA-QUE"  { return HASTA_QUE; }
@@ -33,14 +33,16 @@
 "RESTA"      { return RESTA; }
 "MULTIPLICA" { return MULTIPLICA; }
 "DIVIDE"     { return DIVIDE; }
-"FIN-CALCULA"{ return FIN_CALCULA; }
+"FIN-CALCULA" { return FIN_CALCULA; }
 
 ^ {6}\*.*        { /* Comentario COBOL: línea con asterisco en columna 7 */ }
 \*>.*            { /* Comentario COBOL: comentario en línea */ }
 [ \t]+           { /* Ignorar espacios y tabulaciones */ }
 \n               { /* Ignorar saltos de línea */ }
 "([^"\\\n]|\\.)*" { yylval.str = strdup(yytext); return CADENA_DOBLE; }
-'([^'\\\n]|\\.)*' { yylval.str = strdup(yytext); return CADENA_SIMPLE; }
+[A-Z]([A-Z0-9\-]*[A-Z0-9])? { yylval.str = strdup(yytext); return IDENTIFICADOR; }
+[0-9]+           { yylval.num = atoi(yytext); return NUMERO; }
+.                { /* Ignorar cualquier carácter por ahora */ }
 [A-Z]([A-Z0-9\-]*[A-Z0-9])? { yylval.str = strdup(yytext); return IDENTIFICADOR; }
 [0-9]+           { yylval.num = atoi(yytext); return NUMERO; }
 .                { /* Ignorar cualquier carácter por ahora */ }
