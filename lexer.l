@@ -35,13 +35,13 @@
 "DIVIDE"     { return DIVIDE; }
 "FIN-CALCULA"{ return FIN_CALCULA; }
 
-\*.*            { /* Comentario COBOL: línea que empieza por * */ }
-\*>.*           { /* Comentario COBOL: línea que empieza por *> */ }
-[ \t]+          { /* Ignorar espacios y tabulaciones */ }
-\n              { /* Ignorar saltos de línea */ }
-"([^"\\]|\\.)*" { /* Cadena entre comillas dobles */ }
-'([^'\\]|\\.)*' { /* Cadena entre comillas simples */ }
-[A-Z]([A-Z0-9\-]*[A-Z0-9])? { /* Identificador */ }
-[0-9]+          { /* Número */ }
-.               { /* Ignorar cualquier carácter por ahora */ }
+^ {6}\*.*        { /* Comentario COBOL: línea con asterisco en columna 7 */ }
+\*>.*            { /* Comentario COBOL: comentario en línea */ }
+[ \t]+           { /* Ignorar espacios y tabulaciones */ }
+\n               { /* Ignorar saltos de línea */ }
+"([^"\\\n]|\\.)*" { yylval.str = strdup(yytext); return CADENA_DOBLE; }
+'([^'\\\n]|\\.)*' { yylval.str = strdup(yytext); return CADENA_SIMPLE; }
+[A-Z]([A-Z0-9\-]*[A-Z0-9])? { yylval.str = strdup(yytext); return IDENTIFICADOR; }
+[0-9]+           { yylval.num = atoi(yytext); return NUMERO; }
+.                { /* Ignorar cualquier carácter por ahora */ }
 %%
