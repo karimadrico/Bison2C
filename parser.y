@@ -20,14 +20,44 @@ int yylex(void);
 %token <str> CADENA_DOBLE CADENA_SIMPLE IDENTIFICADOR
 %token <num> NUMERO
 %%
-bloque:
 programa:
     PROGRAMA INICIO bloque FIN { printf("Compilación finalizada correctamente.\n"); }
     ;
 
 bloque:
-    /* Aquí irán las reglas para el bloque principal */
-    /* vacío por ahora */
+    sentencias
+    ;
+
+sentencias:
+    /* vacío */
+    | sentencias sentencia
+    ;
+
+sentencia:
+      LEE IDENTIFICADOR { printf("Leer variable: %s\n", $2); }
+    | MUESTRA expresion { printf("Mostrar expresión\n"); }
+    | EJECUTA sentencias FIN_EJECUTA { printf("Bucle ejecuta\n"); }
+    | SI expresion ENTONCES sentencias FIN_SI { printf("Condicional SI\n"); }
+    | SI expresion ENTONCES sentencias SINO sentencias FIN_SI { printf("Condicional SI/SINO\n"); }
+    | CALCULA operacion FIN_CALCULA { printf("Cálculo\n"); }
+    ;
+
+expresion:
+      NUMERO { $$ = $1; }
+    | IDENTIFICADOR { /* ... */ }
+    | CADENA_DOBLE
+    | CADENA_SIMPLE
+    | expresion MAYOR expresion
+    | expresion MENOR expresion
+    | expresion ENTRE expresion
+    | NO expresion
+    ;
+
+operacion:
+      SUMA expresion DANDO IDENTIFICADOR
+    | RESTA expresion DANDO IDENTIFICADOR
+    | MULTIPLICA expresion DANDO IDENTIFICADOR
+    | DIVIDE expresion DANDO IDENTIFICADOR
     ;
 %%
 
