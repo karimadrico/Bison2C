@@ -1,19 +1,28 @@
 /* parser.y - Analizador sintáctico - Práctica de Bison de 2ª convocatoria
-   Karima Drafli Rico */
+     Karima Drafli Rico */
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 void yyerror(const char *s) { fprintf(stderr, "Error: %s\n", s); }
 int yylex(void);
 %}
+
+%union {
+        char *str;
+        int num;
+}
 
 %start programa
 
 %token PROGRAMA
 %token INICIO FIN LEE MUESTRA EJECUTA FIN_EJECUTA VECES USANDO HASTA_QUE ENTONCES MUEVE A MAYOR MENOR ENTRE SINO SI FIN_SI NO DANDO CALCULA SUMA RESTA MULTIPLICA DIVIDE FIN_CALCULA
+%token <str> CADENA_DOBLE CADENA_SIMPLE IDENTIFICADOR
+%token <num> NUMERO
 %%
+bloque:
 programa:
-    PROGRAMA INICIO bloque FIN
+    PROGRAMA INICIO bloque FIN { printf("Compilación finalizada correctamente.\n"); }
     ;
 
 bloque:
@@ -21,7 +30,17 @@ bloque:
     /* vacío por ahora */
     ;
 %%
-int main() {
+
+int main(int argc, char **argv) {
+    if (argc > 1) {
+        FILE *f = fopen(argv[1], "r");
+        if (!f) {
+            perror("No se pudo abrir el archivo");
+            return 1;
+        }
+        extern FILE *yyin;
+        yyin = f;
+    }
     yyparse();
     return 0;
 }
