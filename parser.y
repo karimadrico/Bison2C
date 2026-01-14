@@ -13,6 +13,9 @@ int yylex(void);
         int num;
 }
 
+
+%type <num> expresion
+%type <str> operacion
 %start programa
 
 %token PROGRAMA
@@ -34,13 +37,29 @@ sentencias:
     ;
 
 sentencia:
-      LEE IDENTIFICADOR { printf("Leer variable: %s\n", $2); }
-    | MUESTRA expresion { printf("Mostrar expresión\n"); }
-    | EJECUTA sentencias FIN_EJECUTA { printf("Bucle ejecuta\n"); }
-    | SI expresion ENTONCES sentencias FIN_SI { printf("Condicional SI\n"); }
-    | SI expresion ENTONCES sentencias SINO sentencias FIN_SI { printf("Condicional SI/SINO\n"); }
-    | CALCULA operacion FIN_CALCULA { printf("Cálculo\n"); }
-    ;
+            LEE IDENTIFICADOR { printf("READ %s\n", $2); }
+        | MUESTRA expresion { printf("PRINT %d\n", $2); }
+        | EJECUTA sentencias FIN_EJECUTA { printf("WHILE ... ENDWHILE\n"); }
+        | SI expresion ENTONCES sentencias FIN_SI {
+                    static int label = 0;
+                    int this_label = label++;
+                    printf("IFZ t%d GOTO L%d\n", $2, this_label);
+                    // ... aquí iría el código de las sentencias ...
+                    printf("L%d:\n", this_label);
+            }
+        | SI expresion ENTONCES sentencias SINO sentencias FIN_SI {
+                    static int label = 0;
+                    int else_label = label++;
+                    int end_label = label++;
+                    printf("IFZ t%d GOTO L%d\n", $2, else_label);
+                    // ... sentencias del SI ...
+                    printf("GOTO L%d\n", end_label);
+                    printf("L%d:\n", else_label);
+                    // ... sentencias del SINO ...
+                    printf("L%d:\n", end_label);
+            }
+        | CALCULA operacion FIN_CALCULA { printf("Cálculo\n"); }
+        ;
 
 expresion:
       NUMERO { $$ = $1; }
