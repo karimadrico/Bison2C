@@ -1,0 +1,153 @@
+Terminals unused in grammar
+
+    LEE
+    MUESTRA
+    EJECUTA
+    FIN_EJECUTA
+    VECES
+    USANDO
+    HASTA_QUE
+    ENTONCES
+    MUEVE
+    A
+    MAYOR
+    MENOR
+    ENTRE
+    SINO
+    SI
+    FIN_SI
+    NO
+    DANDO
+    CALCULA
+    SUMA
+    RESTA
+    MULTIPLICA
+    DIVIDE
+    FIN_CALCULA
+    CADENA_DOBLE
+    CADENA_SIMPLE
+    IDENTIFICADOR
+    NUMERO
+
+
+Rules useless in parser due to conflicts
+
+    3 bloque: ε
+
+
+State 3 conflicts: 1 reduce/reduce
+
+
+Grammar
+
+    0 $accept: programa $end
+
+    1 bloque: ε
+
+    2 programa: PROGRAMA INICIO bloque FIN
+
+    3 bloque: ε
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    PROGRAMA (258) 2
+    INICIO (259) 2
+    FIN (260) 2
+    LEE (261)
+    MUESTRA (262)
+    EJECUTA (263)
+    FIN_EJECUTA (264)
+    VECES (265)
+    USANDO (266)
+    HASTA_QUE (267)
+    ENTONCES (268)
+    MUEVE (269)
+    A (270)
+    MAYOR (271)
+    MENOR (272)
+    ENTRE (273)
+    SINO (274)
+    SI (275)
+    FIN_SI (276)
+    NO (277)
+    DANDO (278)
+    CALCULA (279)
+    SUMA (280)
+    RESTA (281)
+    MULTIPLICA (282)
+    DIVIDE (283)
+    FIN_CALCULA (284)
+    CADENA_DOBLE <str> (285)
+    CADENA_SIMPLE <str> (286)
+    IDENTIFICADOR <str> (287)
+    NUMERO <num> (288)
+
+
+Nonterminals, with rules where they appear
+
+    $accept (34)
+        on left: 0
+    bloque (35)
+        on left: 1 3
+        on right: 2
+    programa (36)
+        on left: 2
+        on right: 0
+
+
+State 0
+
+    0 $accept: • programa $end
+
+    PROGRAMA  shift, and go to state 1
+
+    programa  go to state 2
+
+
+State 1
+
+    2 programa: PROGRAMA • INICIO bloque FIN
+
+    INICIO  shift, and go to state 3
+
+
+State 2
+
+    0 $accept: programa • $end
+
+    $end  shift, and go to state 4
+
+
+State 3
+
+    2 programa: PROGRAMA INICIO • bloque FIN
+
+    FIN       reduce using rule 1 (bloque)
+    FIN       [reduce using rule 3 (bloque)]
+    $default  reduce using rule 1 (bloque)
+
+    bloque  go to state 5
+
+
+State 4
+
+    0 $accept: programa $end •
+
+    $default  accept
+
+
+State 5
+
+    2 programa: PROGRAMA INICIO bloque • FIN
+
+    FIN  shift, and go to state 6
+
+
+State 6
+
+    2 programa: PROGRAMA INICIO bloque FIN •
+
+    $default  reduce using rule 2 (programa)

@@ -53,7 +53,12 @@ expresion:
     | NO expresion
     ;
 
-
+operacion:
+      SUMA expresion DANDO IDENTIFICADOR
+    | RESTA expresion DANDO IDENTIFICADOR
+    | MULTIPLICA expresion DANDO IDENTIFICADOR
+    | DIVIDE expresion DANDO IDENTIFICADOR
+    ;
 %%
 
 int main(int argc, char **argv) {

@@ -17,6 +17,9 @@ NOTA6: No se permite utilizar C para resolver cosas que se pueden hacer en direc
 
 NOTA7: Se valorará positivamente que el código sea ordenado y claro, esté convenientemente comentado y que en los comentarios no haya faltas de ortografía.
 
+
+
+
 # JavaCC A TENER EN CUENTA 
 ## ENUNCIADO DE Práctica de JavaCC de 2ª convocatoria
 ## Enunciado
@@ -70,6 +73,7 @@ En esta práctica, hemos utilizado una versión simplificada muy libre de COBOL,
 
 
 # Ejecutar
+cd /cygdrive/c/Users/kdraf/Downloads/Bison2C/Bison2C
 Esto genera los archivos necesarios con Bison y Flex: 
 bison -v -d parser.y 
 flex lexer.l
