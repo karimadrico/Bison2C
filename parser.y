@@ -15,7 +15,7 @@ int yylex(void);
 
 
 %type <num> expresion
-%type <str> operacion
+%type <str> identificador_o_cadena
 %start programa
 
 %token PROGRAMA
@@ -62,22 +62,25 @@ sentencia:
         ;
 
 expresion:
-      NUMERO { $$ = $1; }
-    | IDENTIFICADOR { /* ... */ }
-    | CADENA_DOBLE
-    | CADENA_SIMPLE
-    | expresion MAYOR expresion
-    | expresion MENOR expresion
-    | expresion ENTRE expresion
-    | NO expresion
-    ;
+            NUMERO { $$ = $1; }
+        | expresion MAYOR expresion { /* comparación mayor */ }
+        | expresion MENOR expresion { /* comparación menor */ }
+        | expresion ENTRE expresion { /* comparación entre */ }
+        | NO expresion { /* negación */ }
+        ;
+
+identificador_o_cadena:
+            IDENTIFICADOR { $$ = $1; }
+        | CADENA_DOBLE { $$ = $1; }
+        | CADENA_SIMPLE { $$ = $1; }
+        ;
 
 operacion:
-      SUMA expresion DANDO IDENTIFICADOR
-    | RESTA expresion DANDO IDENTIFICADOR
-    | MULTIPLICA expresion DANDO IDENTIFICADOR
-    | DIVIDE expresion DANDO IDENTIFICADOR
-    ;
+            SUMA expresion DANDO IDENTIFICADOR { printf("t = %d + %s\n", $2, $4); }
+        | RESTA expresion DANDO IDENTIFICADOR { printf("t = %d - %s\n", $2, $4); }
+        | MULTIPLICA expresion DANDO IDENTIFICADOR { printf("t = %d * %s\n", $2, $4); }
+        | DIVIDE expresion DANDO IDENTIFICADOR { printf("t = %d / %s\n", $2, $4); }
+        ;
 %%
 
 int main(int argc, char **argv) {
