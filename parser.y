@@ -42,6 +42,18 @@ sentencia:
     | CALCULA operacion FIN_CALCULA { printf("Cálculo\n"); }
     ;
 
+expresion:
+      NUMERO { $$ = $1; }
+    | IDENTIFICADOR { /* ... */ }
+    | CADENA_DOBLE
+    | CADENA_SIMPLE
+    | expresion MAYOR expresion
+    | expresion MENOR expresion
+    | expresion ENTRE expresion
+    | NO expresion
+    ;
+
+
 %%
 
 int main(int argc, char **argv) {
