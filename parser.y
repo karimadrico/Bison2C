@@ -15,7 +15,6 @@ int yylex(void);
 
 
 %type <num> expresion
-%type <str> identificador_o_cadena
 %start programa
 
 %token PROGRAMA
@@ -66,14 +65,10 @@ expresion:
         | expresion MAYOR expresion { /* comparación mayor */ }
         | expresion MENOR expresion { /* comparación menor */ }
         | expresion ENTRE expresion { /* comparación entre */ }
-        | NO expresion { /* negación */ }
-        ;
 
-identificador_o_cadena:
-            IDENTIFICADOR { $$ = $1; }
-        | CADENA_DOBLE { $$ = $1; }
-        | CADENA_SIMPLE { $$ = $1; }
-        ;
+        | IDENTIFICADOR { /* variable */ }
+        | CADENA_DOBLE { /* cadena doble */ }
+        | CADENA_SIMPLE { /* cadena simple */ }
 
 operacion:
             SUMA expresion DANDO IDENTIFICADOR { printf("t = %d + %s\n", $2, $4); }
