@@ -103,8 +103,8 @@ assig
     : MOVE expr TO ID                     { printf("    %s := %s\n", $4, $2); }
     | ADD expr TO ID                      { printf("    %s := %s + %s\n", $4, $4, $2); }
     | SUBTRACT expr FROM ID               { printf("    %s := %s - %s\n", $4, $4, $2); }
-    | MULTIPLY expr BY expr GIVING ID     { printf("    %s := %s * %s\n", $5, $2, $4); }
-    | DIVIDE expr BY expr GIVING ID       { printf("    %s := %s / %s\n", $5, $2, $4); }
+    | MULTIPLY expr BY expr GIVING ID     { printf("    %s := %s * %s\n", $6, $2, $4); }
+    | DIVIDE expr BY expr GIVING ID       { printf("    %s := %s / %s\n", $6, $2, $4); }
     ;
 
 /* Expresiones booleanas y condicionales */
