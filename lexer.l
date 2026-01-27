@@ -46,19 +46,16 @@ GIVING   { return GIVING; }
 "*" { return STAR; }
 "/" { return SLASH; }
 
-/* Comentario COBOL: 6 espacios y '*' (columna 7) */
-[ ]{6}\*.*       { /* ignorar línea completa */ }
-\*>.*            { /* Comentario COBOL: comentario en línea */ }
-[ \\t]+         { /* Ignorar espacios y tabulaciones */ }
-[\\r\\n]+       { /* Ignorar saltos de línea */ }
+[ ]{6}\\*.*       { /* comentario COBOL: asterisco en columna 7 */ }
+\\*>.*            { /* comentario COBOL en línea */ }
+[ \\t]+           { /* ignorar espacios y tabulaciones */ }
+[\\r\\n]+         { /* ignorar saltos de línea */ }
 
 \"([^\"\\\n]|\\.)*\" { yylval.str = strdup(yytext); return CAD; }
 '([^'\\\n]|\\.)*'    { yylval.str = strdup(yytext); return CAD; }
 
-/* NUM permite enteros, decimales y notación científica (ver ejemplos del profesor) */
 [0-9]+(\\.[0-9]+)?([eE][+-]?[0-9]+)? { yylval.str = strdup(yytext); return NUM; }
 
-/* ID: solo mayúsculas, dígitos y guiones; sin empezar/terminar con guion */
 [A-Z]([A-Z0-9]*(-[A-Z0-9]+)*)? { yylval.str = strdup(yytext); return ID; }
-.                { /* Ignorar cualquier carácter por ahora */ }
+.                { /* ignorar cualquier carácter por ahora */ }
 %%
