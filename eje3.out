@@ -1,0 +1,37 @@
+Starting...
+Reading from file eje3.cbl . . .
+    VAR := V
+    t1 := 50
+    t2 := 3
+LBL0:
+    t3 := 3
+    RES := VAR * t3
+    print RES
+    VAR := VAR + t2
+    if VAR<t1 goto LBL0
+    lee V
+    VAR := V
+    t4 := 100
+LBL1:
+    t5 := 20
+    if VAR<=t5 goto LBL2
+    print VAR
+LBL2:
+    VAR := VAR + 1
+    if VAR<t4 goto LBL1
+    VAR := 1
+    t6 := 50
+    t7 := 3
+LBL3:
+    t8 := 3
+    RES := VAR * t8
+    print RES
+    VAR := VAR + t7
+    if VAR<t6 goto LBL3
+    VAR := V
+    t9 := 50
+LBL4:
+    print VAR
+    VAR := VAR + 1
+    if VAR<t9 goto LBL4
+Program parsed successfully.

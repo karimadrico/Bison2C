@@ -1,0 +1,35 @@
+Starting...
+Reading from standard input . . .
+    t1 := 5
+    t2 := 25
+    t3 := t1 * t2
+    VAR := t3
+    lee V
+    print 2.34e-10
+LBL0:
+    t4 := 0
+    if VAR<=t4 goto LBL1
+    t5 := 2
+    t6 := t5 * V
+    VAR := VAR - t6
+    goto LBL0
+LBL1:
+    t7 := 5
+    t8 := t7 - VAR
+    t9 := 0
+    if t8<=t9 goto LBL2
+    t10 := 1
+    V := V - t10
+    t11 := 3
+    Z := t11 * V
+    print "3*(V-1) es: "
+    print Z
+    goto LBL3
+LBL2:
+    t12 := 10
+    t13 := VAR + t12
+    Z := t13
+    print 'VAR + 10 es: '
+    print Z
+LBL3:
+Program parsed successfully.

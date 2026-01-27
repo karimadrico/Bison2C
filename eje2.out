@@ -1,0 +1,37 @@
+Starting...
+Reading from file eje2.cbl . . .
+    t1 := 10
+    A := t1
+    t2 := 0
+    B := t2
+LBL0:
+    if A=B goto LBL1
+    if B>=A goto LBL2
+    print B
+LBL2:
+    t3 := 1
+    B := B + t3
+    goto LBL0
+LBL1:
+    t4 := 5
+    A := t4
+    t5 := 0
+    C := t5
+LBL3:
+    t6 := 0
+    if A<=t6 goto LBL4
+    t7 := 1
+    A := A - t7
+LBL5:
+    t8 := 10
+    if C>=t8 goto LBL6
+    t9 := 2
+    C := C + t9
+    print A
+    print B
+    print C
+    goto LBL5
+LBL6:
+    goto LBL3
+LBL4:
+Program parsed successfully.

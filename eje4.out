@@ -1,0 +1,60 @@
+Starting...
+Reading from file eje4.cbl . . .
+    t1 := 5
+    A := t1
+    t2 := 10
+    B := t2
+LBL0:
+    t3 := 0
+    if A<=t3 goto LBL1
+    t4 := 1
+    A := A - t4
+LBL2:
+    t5 := 0
+    if B<=t5 goto LBL3
+    t6 := 1
+    B := B - t6
+LBL4:
+    if B<=A goto LBL5
+    t7 := A * B
+    C := t7
+    t8 := 10
+    D := t8 * C
+    if C<=D goto LBL6
+    print C
+    goto LBL7
+LBL6:
+    t9 := 2
+    t10 := t9 * C
+    V := t10
+    VAR2 := V
+    t11 := 100
+LBL8:
+    t12 := 0
+    if VAR2<=t12 goto LBL9
+    print VAR2
+    goto LBL10
+LBL9:
+    VAR := V
+    t13 := 50
+    t14 := 3
+LBL11:
+    t15 := 2
+    t16 := 3
+    t17 := VAR * t16
+    t18 := t15 + t17
+    Z := t18
+    print Z
+    VAR := VAR + t14
+    if VAR<t13 goto LBL11
+LBL10:
+    VAR2 := VAR2 + 1
+    if VAR2<t11 goto LBL8
+LBL7:
+    goto LBL4
+LBL5:
+    goto LBL2
+LBL3:
+    goto LBL0
+LBL1:
+Program parsed successfully.
