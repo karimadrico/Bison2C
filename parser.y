@@ -122,9 +122,9 @@ booleanExpr
     : expr IS GREATER THAN expr           { char *t = new_temp(); printf("    %s := (%s > %s)\n", t, $1, $5); $$ = t; }
     | expr IS LESS THAN expr              { char *t = new_temp(); printf("    %s := (%s < %s)\n", t, $1, $5); $$ = t; }
     | expr IS EQUAL TO expr               { char *t = new_temp(); printf("    %s := (%s == %s)\n", t, $1, $5); $$ = t; }
-    | expr IS NOT GREATER THAN expr       { char *t = new_temp(); printf("    %s := (%s <= %s)\n", t, $1, $5); $$ = t; }
-    | expr IS NOT LESS THAN expr          { char *t = new_temp(); printf("    %s := (%s >= %s)\n", t, $1, $5); $$ = t; }
-    | expr IS NOT EQUAL TO expr           { char *t = new_temp(); printf("    %s := (%s != %s)\n", t, $1, $5); $$ = t; }
+    | expr IS NOT GREATER THAN expr       { char *t = new_temp(); printf("    %s := (%s <= %s)\n", t, $1, $6); $$ = t; }
+    | expr IS NOT LESS THAN expr          { char *t = new_temp(); printf("    %s := (%s >= %s)\n", t, $1, $6); $$ = t; }
+    | expr IS NOT EQUAL TO expr           { char *t = new_temp(); printf("    %s := (%s != %s)\n", t, $1, $6); $$ = t; }
     ;
 
 /* Condicionales IF/ELSE con etiquetas básicas */
@@ -175,6 +175,27 @@ loop
         char *lbl_start = new_label();
         char *lbl_end   = new_label();
         printf("    %s := %s\n", $2, $4);
+        printf("%s:\n", lbl_start);
+        printf("    ifz %s goto %s\n", $2, lbl_end);
+        printf("    goto %s\n", lbl_start);
+        printf("%s:\n", lbl_end);
+      }
+    | VARYING ID TO atomic DO stmts END
+      {
+        char *lbl_start = new_label();
+        char *lbl_end   = new_label();
+        /* inicial: VAR := 1; tope := atomic */
+        printf("    %s := 1\n", $2);
+        printf("%s:\n", lbl_start);
+        printf("    ifz %s goto %s\n", $2, lbl_end);
+        printf("    goto %s\n", lbl_start);
+        printf("%s:\n", lbl_end);
+      }
+    | VARYING ID TO atomic BY atomic DO stmts END
+      {
+        char *lbl_start = new_label();
+        char *lbl_end   = new_label();
+        printf("    %s := 1\n", $2);
         printf("%s:\n", lbl_start);
         printf("    ifz %s goto %s\n", $2, lbl_end);
         printf("    goto %s\n", lbl_start);
