@@ -14,7 +14,7 @@ int yylex(void);
 
 %start program
 
-%token PROGRAM BEGIN END
+%token PROGRAM TBEGIN END
 %token MOVE ADD SUBTRACT MULTIPLY DIVIDE
 %token ACCEPT DISPLAY
 %token IF THEN ELSE
@@ -32,7 +32,7 @@ int yylex(void);
 /* Gramática mínima para compilar y empezar a validar estructura del lenguaje. */
 
 program
-    : PROGRAM ID DOT BEGIN stmts END DOT
+    : PROGRAM ID DOT TBEGIN stmts END DOT
     ;
 
 stmts
