@@ -6,10 +6,17 @@
 #include <string.h>
 
 int temp_count = 1;
+int label_count = 0;
 
 static char *new_temp(void) {
     char buffer[32];
     snprintf(buffer, sizeof(buffer), "t%d", temp_count++);
+    return strdup(buffer);
+}
+
+static char *new_label(void) {
+    char buffer[32];
+    snprintf(buffer, sizeof(buffer), "LBL%d", label_count++);
     return strdup(buffer);
 }
 
@@ -38,6 +45,7 @@ int yylex(void);
 %token <str> CAD
 
 %type <str> expr mult val literal display_list assig
+%type <str> booleanExpr
 
 
 %%
@@ -107,28 +115,70 @@ assig
     | DIVIDE expr BY expr GIVING ID       { printf("    %s := %s / %s\n", $6, $2, $4); }
     ;
 
-/* Expresiones booleanas y condicionales */
+/* Expresiones booleanas: devolvemos un temporal con 0/1 */
 
 booleanExpr
-    : expr IS GREATER THAN expr
-    | expr IS LESS THAN expr
-    | expr IS EQUAL TO expr
-    | expr IS NOT GREATER THAN expr
-    | expr IS NOT LESS THAN expr
-    | expr IS NOT EQUAL TO expr
+    : expr IS GREATER THAN expr           { char *t = new_temp(); printf("    %s := (%s > %s)\n", t, $1, $5); $$ = t; }
+    | expr IS LESS THAN expr              { char *t = new_temp(); printf("    %s := (%s < %s)\n", t, $1, $5); $$ = t; }
+    | expr IS EQUAL TO expr               { char *t = new_temp(); printf("    %s := (%s == %s)\n", t, $1, $5); $$ = t; }
+    | expr IS NOT GREATER THAN expr       { char *t = new_temp(); printf("    %s := (%s <= %s)\n", t, $1, $5); $$ = t; }
+    | expr IS NOT LESS THAN expr          { char *t = new_temp(); printf("    %s := (%s >= %s)\n", t, $1, $5); $$ = t; }
+    | expr IS NOT EQUAL TO expr           { char *t = new_temp(); printf("    %s := (%s != %s)\n", t, $1, $5); $$ = t; }
     ;
+
+/* Condicionales IF/ELSE con etiquetas básicas */
 
 cond
     : IF booleanExpr THEN stmts END
+      {
+        char *lbl_end = new_label();
+        printf("    ifz %s goto %s\n", $2, lbl_end);
+        printf("%s:\n", lbl_end);
+      }
     | IF booleanExpr THEN stmts ELSE stmts END
+      {
+        char *lbl_else = new_label();
+        char *lbl_end  = new_label();
+        printf("    ifz %s goto %s\n", $2, lbl_else);
+        printf("    goto %s\n", lbl_end);
+        printf("%s:\n", lbl_else);
+        printf("%s:\n", lbl_end);
+      }
     ;
 
-/* Bucles WHILE y VARYING */
+/* Bucles WHILE y VARYING con esqueleto de etiquetas */
 
 loop
     : WHILE booleanExpr DO stmts END
+      {
+        char *lbl_start = new_label();
+        char *lbl_end   = new_label();
+        printf("%s:\n", lbl_start);
+        printf("    ifz %s goto %s\n", $2, lbl_end);
+        printf("    goto %s\n", lbl_start);
+        printf("%s:\n", lbl_end);
+      }
     | VARYING ID FROM atomic TO atomic DO stmts END
+      {
+        char *lbl_start = new_label();
+        char *lbl_end   = new_label();
+        /* Inicialización simple del contador */
+        printf("    %s := %s\n", $2, $4);
+        printf("%s:\n", lbl_start);
+        printf("    ifz %s goto %s\n", $2, lbl_end);
+        printf("    goto %s\n", lbl_start);
+        printf("%s:\n", lbl_end);
+      }
     | VARYING ID FROM atomic TO atomic BY atomic DO stmts END
+      {
+        char *lbl_start = new_label();
+        char *lbl_end   = new_label();
+        printf("    %s := %s\n", $2, $4);
+        printf("%s:\n", lbl_start);
+        printf("    ifz %s goto %s\n", $2, lbl_end);
+        printf("    goto %s\n", lbl_start);
+        printf("%s:\n", lbl_end);
+      }
     ;
 
 atomic

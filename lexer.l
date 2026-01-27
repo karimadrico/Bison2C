@@ -53,7 +53,7 @@
 \"([^\"\\\n]|\\.)*\" { yylval.str = strdup(yytext); return CAD; }
 '([^'\\\n]|\\.)*'    { yylval.str = strdup(yytext); return CAD; }
 
-/* Números: enteros, decimales y notación científica, p.ej. 2.34e-10 */
+
 [0-9]+(\.[0-9]+)?([eE][+-]?[0-9]+)? { yylval.str = strdup(yytext); return NUM; }
 
 [A-Z]([A-Z0-9]*(-[A-Z0-9]+)*)? { yylval.str = strdup(yytext); return ID; }
