@@ -46,6 +46,7 @@ int yylex(void);
 
 %type <str> expr mult val literal display_list assig
 %type <str> booleanExpr
+%type <str> atomic
 
 
 %%
