@@ -43,6 +43,7 @@ stmts
 
 stmt
     : io SEMICOLON
+    | assig SEMICOLON
     ;
 
 io
@@ -55,6 +56,36 @@ literal
     : ID
     | NUM
     | CAD
+    ;
+
+/* Expresiones aritméticas con la precedencia correcta (+,-) sobre (*,/). */
+
+expr
+    : mult
+    | expr PLUS mult
+    | expr MINUS mult
+    ;
+
+mult
+    : val
+    | mult STAR val
+    | mult SLASH val
+    ;
+
+val
+    : NUM
+    | ID
+    | LPAREN expr RPAREN
+    ;
+
+/* Asignaciones aritméticas: MOVE, ADD, SUBTRACT, MULTIPLY, DIVIDE. */
+
+assig
+    : MOVE expr TO ID
+    | ADD expr TO ID
+    | SUBTRACT expr FROM ID
+    | MULTIPLY expr BY expr GIVING ID
+    | DIVIDE expr BY expr GIVING ID
     ;
 %%
 
