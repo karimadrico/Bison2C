@@ -28,6 +28,7 @@ int yylex(void);
 %token <str> NUM
 %token <str> CAD
 
+
 %%
 /* Gramática mínima para compilar y empezar a validar estructura del lenguaje. */
 
@@ -41,8 +42,19 @@ stmts
     ;
 
 stmt
-    : SEMICOLON
-    | END SEMICOLON /* permite END. como sentencia suelta mientras itero */
+    : io SEMICOLON
+    ;
+
+io
+    : DISPLAY literal
+    | DISPLAY literal COMMA literal
+    | ACCEPT ID
+    ;
+
+literal
+    : ID
+    | NUM
+    | CAD
     ;
 %%
 
