@@ -10,72 +10,40 @@ int yylex(void);
 
 %union {
         char *str;
-        int num;
 }
 
+%start program
 
-%type <num> expresion
-%start programa
+%token PROGRAM BEGIN END
+%token MOVE ADD SUBTRACT MULTIPLY DIVIDE
+%token ACCEPT DISPLAY
+%token IF THEN ELSE
+%token WHILE DO
+%token VARYING FROM TO BY
+%token IS GREATER LESS EQUAL NOT THAN GIVING
+%token DOT COMMA SEMICOLON LPAREN RPAREN
+%token PLUS MINUS STAR SLASH
 
-%token PROGRAMA
-%token INICIO FIN LEE MUESTRA EJECUTA FIN_EJECUTA VECES USANDO HASTA_QUE ENTONCES MUEVE A MAYOR MENOR ENTRE SINO SI FIN_SI NO DANDO CALCULA SUMA RESTA MULTIPLICA DIVIDE FIN_CALCULA
-%token <str> CADENA_DOBLE CADENA_SIMPLE IDENTIFICADOR
-%token <num> NUMERO
+%token <str> ID
+%token <str> NUM
+%token <str> CAD
+
 %%
-programa:
-    PROGRAMA INICIO bloque FIN { printf("Compilación finalizada correctamente.\n"); }
+/* Gramática mínima para compilar y empezar a validar estructura del lenguaje. */
+
+program
+    : PROGRAM ID DOT BEGIN stmts END DOT
     ;
 
-bloque:
-    sentencias
+stmts
+    : /* vacío */
+    | stmts stmt
     ;
 
-sentencias:
-    /* vacío */
-    | sentencias sentencia
+stmt
+    : SEMICOLON
+    | END SEMICOLON /* permite END. como sentencia suelta mientras itero */
     ;
-
-sentencia:
-            LEE IDENTIFICADOR { printf("READ %s\n", $2); }
-        | MUESTRA expresion { printf("PRINT %d\n", $2); }
-        | EJECUTA sentencias FIN_EJECUTA { printf("WHILE ... ENDWHILE\n"); }
-        | SI expresion ENTONCES sentencias FIN_SI {
-                    static int label = 0;
-                    int this_label = label++;
-                    printf("IFZ t%d GOTO L%d\n", $2, this_label);
-                    // ... aquí iría el código de las sentencias ...
-                    printf("L%d:\n", this_label);
-            }
-        | SI expresion ENTONCES sentencias SINO sentencias FIN_SI {
-                    static int label = 0;
-                    int else_label = label++;
-                    int end_label = label++;
-                    printf("IFZ t%d GOTO L%d\n", $2, else_label);
-                    // ... sentencias del SI ...
-                    printf("GOTO L%d\n", end_label);
-                    printf("L%d:\n", else_label);
-                    // ... sentencias del SINO ...
-                    printf("L%d:\n", end_label);
-            }
-        | CALCULA operacion FIN_CALCULA { printf("Cálculo\n"); }
-        ;
-
-expresion:
-            NUMERO { $$ = $1; }
-        | expresion MAYOR expresion { /* comparación mayor */ }
-        | expresion MENOR expresion { /* comparación menor */ }
-        | expresion ENTRE expresion { /* comparación entre */ }
-
-        | IDENTIFICADOR { /* variable */ }
-        | CADENA_DOBLE { /* cadena doble */ }
-        | CADENA_SIMPLE { /* cadena simple */ }
-
-operacion:
-            SUMA expresion DANDO IDENTIFICADOR { printf("t = %d + %s\n", $2, $4); }
-        | RESTA expresion DANDO IDENTIFICADOR { printf("t = %d - %s\n", $2, $4); }
-        | MULTIPLICA expresion DANDO IDENTIFICADOR { printf("t = %d * %s\n", $2, $4); }
-        | DIVIDE expresion DANDO IDENTIFICADOR { printf("t = %d / %s\n", $2, $4); }
-        ;
 %%
 
 int main(int argc, char **argv) {
