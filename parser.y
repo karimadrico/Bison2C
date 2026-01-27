@@ -49,9 +49,15 @@ stmt
     ;
 
 io
-    : DISPLAY literal
-    | DISPLAY literal COMMA literal
+    : DISPLAY display_list
     | ACCEPT ID
+    ;
+
+/* Lista de literales para DISPLAY: literal (',' literal)* */
+
+display_list
+    : literal
+    | display_list COMMA literal
     ;
 
 literal
@@ -110,6 +116,7 @@ cond
 
 loop
     : WHILE booleanExpr DO stmts END
+    | VARYING ID FROM atomic TO atomic DO stmts END
     | VARYING ID FROM atomic TO atomic BY atomic DO stmts END
     ;
 
