@@ -46,10 +46,10 @@
 "*" { return STAR; }
 "/" { return SLASH; }
 
-[ ]{6}\\*.*       { /* comentario COBOL: asterisco en columna 7 */ }
-\\*>.*            { /* comentario COBOL en línea */ }
-[ \\t]+           { /* ignorar espacios y tabulaciones */ }
-[\\r\\n]+         { /* ignorar saltos de línea */ }
+[ ]{6}\*.*       { /* comentario COBOL: asterisco en columna 7 */ }
+\*>.*            { /* comentario COBOL en línea */ }
+[ \t]+           { /* ignorar espacios y tabulaciones */ }
+[\r\n]+         { /* ignorar saltos de línea */ }
 
 \"([^\"\\\n]|\\.)*\" { yylval.str = strdup(yytext); return CAD; }
 '([^'\\\n]|\\.)*'    { yylval.str = strdup(yytext); return CAD; }
