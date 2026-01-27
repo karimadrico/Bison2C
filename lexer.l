@@ -8,7 +8,6 @@
 %}
 %option noyywrap
 %%
-
 "PROGRAM"  { return PROGRAM; }
 "BEGIN"    { return TBEGIN; }
 "END"      { return END; }
@@ -55,7 +54,7 @@
 '([^'\\\n]|\\.)*'    { yylval.str = strdup(yytext); return CAD; }
 
 /* Números: enteros, decimales y notación científica, p.ej. 2.34e-10 */
-[0-9]+(\\.[0-9]+)?([eE][+-]?[0-9]+)? { yylval.str = strdup(yytext); return NUM; }
+[0-9]+(\.[0-9]+)?([eE][+-]?[0-9]+)? { yylval.str = strdup(yytext); return NUM; }
 
 [A-Z]([A-Z0-9]*(-[A-Z0-9]+)*)? { yylval.str = strdup(yytext); return ID; }
 .                { /* ignorar cualquier carácter por ahora */ }
