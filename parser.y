@@ -42,8 +42,10 @@ stmts
     ;
 
 stmt
-    : io SEMICOLON
-    | assig SEMICOLON
+    : io DOT
+    | assig DOT
+    | cond DOT
+    | loop DOT
     ;
 
 io
@@ -86,6 +88,34 @@ assig
     | SUBTRACT expr FROM ID
     | MULTIPLY expr BY expr GIVING ID
     | DIVIDE expr BY expr GIVING ID
+    ;
+
+/* Expresiones booleanas y condicionales */
+
+booleanExpr
+    : expr IS GREATER THAN expr
+    | expr IS LESS THAN expr
+    | expr IS EQUAL TO expr
+    | expr IS NOT GREATER THAN expr
+    | expr IS NOT LESS THAN expr
+    | expr IS NOT EQUAL TO expr
+    ;
+
+cond
+    : IF booleanExpr THEN stmts END
+    | IF booleanExpr THEN stmts ELSE stmts END
+    ;
+
+/* Bucles WHILE y VARYING */
+
+loop
+    : WHILE booleanExpr DO stmts END
+    | VARYING ID FROM atomic TO atomic BY atomic DO stmts END
+    ;
+
+atomic
+    : ID
+    | NUM
     ;
 %%
 
