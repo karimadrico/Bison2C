@@ -37,7 +37,7 @@ int yylex(void);
 %token <str> NUM
 %token <str> CAD
 
-%type <str> expr mult val literal display_list
+%type <str> expr mult val literal display_list assig
 
 
 %%
